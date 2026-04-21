@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Send, MessageSquare, CheckCircle } from 'lucide-react'
+import { Send, MessageSquare, CheckCircle, Clock } from 'lucide-react'
 import { initialMessages } from '../data/mockData'
 import { useAuth } from '../context/AuthContext'
 
@@ -15,6 +15,7 @@ export default function Messaging() {
   const { user } = useAuth()
   const isAdmin = user?.role === 'admin'
 
+  // Filter messages relevant to the current user role
   const relevantMessages = isAdmin
     ? initialMessages
     : initialMessages.filter(m => m.participants.partnerCompany === 'Inlaks Computers Ltd')
@@ -93,6 +94,7 @@ export default function Messaging() {
           {/* Thread */}
           {active ? (
             <div className="flex-1 flex flex-col min-w-0">
+              {/* Thread header */}
               <div className="px-6 py-4 border-b border-slate-100 flex items-start justify-between flex-shrink-0">
                 <div>
                   <p className="font-display font-semibold text-slate-900">{active.subject}</p>
@@ -107,6 +109,7 @@ export default function Messaging() {
                 </span>
               </div>
 
+              {/* Messages */}
               <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
                 {active.thread.map(msg => {
                   const isMe = (isAdmin && msg.sender === 'admin') || (!isAdmin && msg.sender === 'partner')
@@ -131,6 +134,7 @@ export default function Messaging() {
                 })}
               </div>
 
+              {/* Compose */}
               <div className="px-6 py-4 border-t border-slate-100 flex-shrink-0">
                 {active.status === 'resolved' ? (
                   <div className="flex items-center justify-center gap-2 text-slate-400 text-sm py-2">

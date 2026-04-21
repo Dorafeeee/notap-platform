@@ -1,16 +1,20 @@
 import { useState } from 'react'
-import { Award, Cpu, AlertTriangle, CheckCircle, Clock, Download, Eye } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { Award, Cpu, AlertTriangle, CheckCircle, Clock, Download, Eye, RotateCcw, CreditCard } from 'lucide-react'
 import { certificates, submissions, acquirerStats } from '../../data/mockData'
 import { StatCard, Badge, Button, Modal } from '../../components/ui'
 import { useAuth } from '../../context/AuthContext'
 
 export default function AcquirerDashboard() {
   const { user } = useAuth()
+  const navigate = useNavigate()
   const [certModal, setCertModal] = useState(null)
 
   const myCerts = certificates.filter(c => c.acquirerName === 'Guaranty Trust Bank Plc')
   const myTech = submissions.filter(s => s.acquirerName === 'Guaranty Trust Bank Plc')
   const pending = myTech.filter(s => s.status === 'pending_review')
+  // Simulate: one approved submission is awaiting fee payment (first-time cert)
+  const pendingFeeSub = myTech.find(s => s.status === 'approved' && !s.certificateId) || null
 
   return (
     <div>
@@ -27,6 +31,27 @@ export default function AcquirerDashboard() {
         <StatCard icon={AlertTriangle} label="Expiring Soon" value={acquirerStats.expiringSoon} sub="Within 90 days" color="amber" className="animate-delay-300" />
         <StatCard icon={Clock} label="Pending Confirmation" value={acquirerStats.pendingConfirmation} color="slate" className="animate-delay-400" />
       </div>
+
+      {/* Fee payment required banner */}
+      {pendingFeeSub && (
+        <div className="bg-brand-50 border border-brand-200 rounded-2xl px-6 py-4 mb-6 flex items-center justify-between animate-fadeInUp">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 bg-brand-100 rounded-xl flex items-center justify-center">
+              <CreditCard size={18} className="text-brand-600" />
+            </div>
+            <div>
+              <p className="font-semibold text-brand-800 text-sm">Certificate Fee Payment Required</p>
+              <p className="text-brand-600 text-xs mt-0.5">
+                Your submission for <strong>{pendingFeeSub.technology}</strong> has been approved by NOTAP.
+                Pay the compliance fee to receive your certificate.
+              </p>
+            </div>
+          </div>
+          <Button variant="primary" size="sm" onClick={() => navigate('/acquirer/pay-fee', { state: { submission: pendingFeeSub } })}>
+            <CreditCard size={13} /> Pay Fee
+          </Button>
+        </div>
+      )}
 
       {/* Pending action banner */}
       {pending.length > 0 && (
@@ -97,8 +122,17 @@ export default function AcquirerDashboard() {
                   </Button>
                 </div>
                 {cert.status === 'expiring_soon' && (
-                  <div className="mt-2 flex items-center gap-1.5 text-amber-600 text-xs">
-                    <AlertTriangle size={11} /> Renewal required before {cert.expiryDate}
+                  <div className="mt-3 flex items-center justify-between">
+                    <div className="flex items-center gap-1.5 text-amber-600 text-xs">
+                      <AlertTriangle size={11} /> Renewal required before {cert.expiryDate}
+                    </div>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => navigate('/acquirer/renew', { state: { cert } })}
+                    >
+                      <RotateCcw size={12} /> Renew
+                    </Button>
                   </div>
                 )}
               </div>

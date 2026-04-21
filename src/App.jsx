@@ -16,6 +16,8 @@ import NewSubmission from './pages/partner/NewSubmission'
 import AcquirerDashboard from './pages/acquirer/Dashboard'
 import AcquirerTechnologies from './pages/acquirer/Technologies'
 import AcquirerCertificates from './pages/acquirer/Certificates'
+import RenewalFlow from './pages/acquirer/RenewalFlow'
+import FeePayment from './pages/acquirer/FeePayment'
 
 function ProtectedRoute({ children, role }) {
   const { user } = useAuth()
@@ -49,6 +51,8 @@ function AppRoutes() {
       <Route path="/acquirer" element={<ProtectedRoute role="acquirer"><AcquirerDashboard /></ProtectedRoute>} />
       <Route path="/acquirer/technologies" element={<ProtectedRoute role="acquirer"><AcquirerTechnologies /></ProtectedRoute>} />
       <Route path="/acquirer/certificates" element={<ProtectedRoute role="acquirer"><AcquirerCertificates /></ProtectedRoute>} />
+      <Route path="/acquirer/renew" element={<ProtectedRoute role="acquirer"><RenewalFlow /></ProtectedRoute>} />
+      <Route path="/acquirer/pay-fee" element={<ProtectedRoute role="acquirer"><FeePayment /></ProtectedRoute>} />
 
       {/* Fallback */}
       <Route path="*" element={<Navigate to="/" replace />} />
