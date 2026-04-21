@@ -95,6 +95,29 @@ export const submissions = [
     certificateId: 'CERT-2026-0088',
   },
   {
+    id: 'SUB-2026-0093',
+    status: 'approved',
+    submittedDate: '2026-03-12',
+    approvedDate: '2026-03-20',
+    technology: 'Salesforce Financial Services Cloud',
+    category: 'CRM / Cloud Software',
+    oemId: 'OEM006',
+    oemName: 'Salesforce Inc.',
+    oemCountry: 'United States',
+    localPartnerId: 'LP-2024-0041',
+    localPartnerName: 'Inlaks Computers Ltd',
+    acquirerId: 'SA001',
+    acquirerName: 'Guaranty Trust Bank Plc',
+    agreementFee: 'USD 640,000',
+    signingDate: '2026-03-08',
+    effectiveDate: '2026-04-01',
+    expiryDate: '2027-03-31',
+    version: 'Spring 2026',
+    documents: ['GTB_Salesforce_Agreement.pdf'],
+    reviewComment: 'Documentation complete. Awaiting compliance fee payment to issue certificate.',
+    // No certificateId — fee payment pending
+  },
+  {
     id: 'SUB-2026-0085',
     status: 'approved',
     submittedDate: '2026-03-05',
@@ -246,10 +269,11 @@ export const partnerStats = {
 }
 
 export const acquirerStats = {
-  activeTechnologies: 3,
-  activeCertificates: 3,
+  activeTechnologies: 4,
+  activeCertificates: 2,
   expiringSoon: 1,
   pendingConfirmation: 1,
+  pendingFeePayment: 1,
 }
 
 // ── OEM Registry ──────────────────────────────────────────────
