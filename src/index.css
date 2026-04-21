@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background-color: #f1f5f9;
+  color: #0f172a;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Sidebar active link */
+.nav-link {
+  @apply flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer;
+}
+
+.nav-link:hover {
+  @apply bg-white/10 text-white;
+}
+
+.nav-link.active {
+  @apply bg-brand-600 text-white shadow-lg;
+}
+
+.nav-link.inactive {
+  @apply text-slate-300;
+}
+
+/* Card hover */
+.stat-card {
+  @apply bg-white rounded-2xl p-6 border border-slate-100 shadow-sm transition-all duration-200;
+}
+
+.stat-card:hover {
+  @apply shadow-md -translate-y-0.5;
+}
+
+/* Fade in animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.4s ease-out forwards;
+}
+
+.animate-delay-100 { animation-delay: 0.1s; }
+.animate-delay-200 { animation-delay: 0.2s; }
+.animate-delay-300 { animation-delay: 0.3s; }
+.animate-delay-400 { animation-delay: 0.4s; }
+
+/* Step indicator */
+.step-line {
+  height: 2px;
+  background: linear-gradient(to right, #15803d, #bbf7d0);
+}
